@@ -9,12 +9,12 @@ const MyBlogCategories = () => {
   useEffect(() => {
     getCategoriesApi();
   }, []);
-  const categories = useSelector((state) => state.category.categories);
+  const categories = useSelector((state) => state.category?.categories);
   const activeCategoryGlobal = useSelector(
-    (state) => state.blog.myBlogQueries.filters.categoryId
+    (state) => state.blog.myBlogQueries?.filters?.categoryId
   );
   const pagination = useSelector(
-    (state) => state.blog.myBlogQueries.pagination
+    (state) => state.blog.myBlogQueries?.pagination
   );
 
   const [activeCategoryId, setActiveCategoryId] = useState(
