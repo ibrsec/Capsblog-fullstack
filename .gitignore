@@ -43,7 +43,7 @@ bower_components
 build/Release
 
 # build
-public
+
 
 # Dependency directories
 node_modules/
