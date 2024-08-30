@@ -129,13 +129,13 @@ import { useEffect } from "react";
 
 export default function Pagination() {
   const dispatch = useDispatch();
-  const pagination = useSelector((state) => state.blog.blogQueries.pagination);
+  const pagination = useSelector((state) => state.blog.blogQueries?.pagination);
   console.log("pagination", pagination);
   // Destructure necessary pagination details
-  let current = pagination.page || 1;
-  const {  next, previous, totalPages } = pagination.pages || {};
-  const totalItems = pagination.totalRecords || 0;
-  const itemsPerPage = pagination.limit || 15;
+  let current = pagination?.page || 1;
+  const {  next, previous, totalPages } = pagination?.pages || {};
+  const totalItems = pagination?.totalRecords || 0;
+  const itemsPerPage = pagination?.limit || 15;
   const startItem = ((current || 1) - 1) * itemsPerPage + 1;
   const endItem = Math.min(startItem + itemsPerPage - 1, totalItems);
 

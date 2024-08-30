@@ -4,23 +4,23 @@ export const generateQueryPublished = (state) => {//{{filters,searchs,filters}
 
     //page
 
-    if(state.pagination.page){
+    if(state?.pagination?.page){
 
-        queryString += "&page=" + state.pagination?.page;
+        queryString += "&page=" + state?.pagination?.page;
     }
     
 
 
     //filters
-    for (const key in state.filters) {
-      if (state.filters[key])
-        queryString += `&filter[${key}]=${state.filters[key]}`;
+    for (const key in state?.filters) {
+      if (state?.filters[key])
+        queryString += `&filter[${key}]=${state?.filters[key]}`;
     }
 
     //searchs
-    for (const key in state.searchs) {
-      if (state.searchs[key]) {
-        queryString += `&search[${key}]=${state.searchs[key]}`;
+    for (const key in state?.searchs) {
+      if (state?.searchs[key]) {
+        queryString += `&search[${key}]=${state?.searchs[key]}`;
       }
     }
 
@@ -31,20 +31,20 @@ export const generateQueryPublished = (state) => {//{{filters,searchs,filters}
     let queryString = "";
 
     //page
-    if(state.pagination.page){
+    if(state?.pagination?.page){
     queryString += "page=" + state.pagination.page;
     }
 
     //filters
-    for (const key in state.filters) {
-      if (state.filters[key])
-        queryString += `&filter[${key}]=${state.filters[key]}`;
+    for (const key in state?.filters) {
+      if (state?.filters[key])
+        queryString += `&filter[${key}]=${state?.filters[key]}`;
     }
 
     //searchs
-    for (const key in state.searchs) {
-      if (state.searchs[key]) {
-        queryString += `&search[${key}]=${state.searchs[key]}`;
+    for (const key in state?.searchs) {
+      if (state?.searchs[key]) {
+        queryString += `&search[${key}]=${state?.searchs[key]}`;
       }
     }
     return queryString;
