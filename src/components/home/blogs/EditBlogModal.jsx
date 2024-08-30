@@ -30,18 +30,27 @@ import { MdCategory } from "react-icons/md";
 import { urlValidation } from "../../../helpers/urlValidation";
 import useBlogServices from "../../../services/useBlogServices";
 
-const NewPostModal = ({ open, setOpen }) => {
-  const { postNewBlogApi } = useBlogServices();
+const EditBlogModal = ({ open, setOpen, blog }) => {
+  const { putUpdateBlogApi } = useBlogServices();
 
   const categories = useSelector((state) => state.category.categories);
- 
+
   const [inputs, setInputs] = useState({
-    categoryId: "",
-    title: "",
-    content: "",
-    image: "",
-    isPublish: false,
+    categoryId: blog?.categoryId?._id || "",
+    title: blog?.title || "",
+    content: blog?.content || "",
+    image: blog?.image || "",
+    isPublish: blog?.isPublish || false,
   });
+  useEffect(() => {
+    setInputs({
+      categoryId: blog?.categoryId?._id || "",
+      title: blog?.title || "",
+      content: blog?.content || "",
+      image: blog?.image || "",
+      isPublish: blog?.isPublish || false,
+    });
+  }, [blog]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -51,24 +60,18 @@ const NewPostModal = ({ open, setOpen }) => {
     });
   };
 
-//   useEffect(() => {
-//     if (inputs.password) passwordValidation(inputs.password, setPassError);
-//   }, [inputs]);
+  //   useEffect(() => {
+  //     if (inputs.password) passwordValidation(inputs.password, setPassError);
+  //   }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log(inputs);
-    if (
-      !inputs.categoryId ||
-      !inputs.title ||
-      !inputs.content 
-    ) {
+    if (!inputs.categoryId || !inputs.title || !inputs.content) {
       toastDefault("All fields are required!");
       return;
     }
-
-    
 
     if (inputs.title < 3 || inputs.title > 50) {
       toastDefault("Title length must be between 3 - 50!");
@@ -84,25 +87,23 @@ const NewPostModal = ({ open, setOpen }) => {
       formPayload.append(key, inputs[key]);
     }
 
-    if(inputs.image){
-    if(typeof inputs.image != 'object'){
-      if (!urlValidation(inputs.image)) {
-        toastDefault("Image url must start with http:// or https:// !");
-        return;
+    if (inputs.image) {
+      if (typeof inputs.image != "object") {
+        if (!urlValidation(inputs.image)) {
+          toastDefault("Image url must start with http:// or https:// !");
+          return;
+        }
       }
-    }
-  }else{
-    toastDefault("All fields are required!");
+    } else {
+      toastDefault("All fields are required!");
       return;
-  }
+    }
 
-    console.log('inputs.image', inputs.image, typeof inputs.image)
+    console.log("inputs.image", inputs.image, typeof inputs.image);
 
+    console.log("formPayload=", formPayload);
 
-
-console.log('formPayload=', formPayload)
-
-    postNewBlogApi(formPayload);
+    putUpdateBlogApi(blog?._id,formPayload);
 
     setInputs({
       categoryId: "",
@@ -156,7 +157,7 @@ console.log('formPayload=', formPayload)
                           id="categoryId"
                           className="w-full p-2 pl-3 text-white bg-transparent focus:outline-none border-l-2 border-green-300 placeholder-gray-200 cursor-pointer"
                           value={inputs.categoryId}
-                            onChange={handleChange}
+                          onChange={handleChange}
                         >
                           <option value="" className="bg-amber-500 text-black">
                             Select Category
@@ -194,7 +195,7 @@ console.log('formPayload=', formPayload)
                         <label htmlFor="content" className="p-2 ">
                           <FaLock className="text-blue-700" />
                         </label>
-                        <textarea 
+                        <textarea
                           type="text"
                           className="p-2 pl-3 text-white  bg-transparent focus:outline-none border-l-2 border-green-300 placeholder-gray-200 "
                           placeholder="Content"
@@ -245,7 +246,7 @@ console.log('formPayload=', formPayload)
                           id="image"
                           value={inputs.image}
                           onChange={handleChange}
-                          disabled={typeof inputs.image == 'object'}
+                          disabled={typeof inputs.image == "object"}
                         />
                       </div>
 
@@ -280,7 +281,7 @@ console.log('formPayload=', formPayload)
                           className="text-white bg-amber-900 hover:bg-amber-600 active:bg-amber-500 transition-all py-2 px-16 w-full text-sm font-semibold rounded-lg"
                           type="submit"
                         >
-                          Create
+                          Update
                         </button>
                       </div>
                     </form>
@@ -295,4 +296,4 @@ console.log('formPayload=', formPayload)
   );
 };
 
-export default NewPostModal;
+export default EditBlogModal;

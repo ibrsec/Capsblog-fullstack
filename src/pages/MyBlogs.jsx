@@ -10,38 +10,36 @@ import { useEffect, useState } from "react";
 import NewPostModal from "../components/home/newPost/NewPostModal";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../components/home/SearchBar";
-import Pagination from "../components/home/Pagination";
+import Pagination from "../components/home/Pagination"; 
+import MyBlogs_Blogs from "../components/myBlogs/MyBlogs_Blogs";
 import { setCategoryFilter, setPagination, setTitleSearch } from "../app/features/blogSlice";
-const Home = () => {
+import MyBlogSearchBar from "../components/myBlogs/MyBlogSearchBar";
+import MyBlogCategories from "../components/myBlogs/MyBlogCategories";
+import MyBlogPagination from "../components/myBlogs/MyBlogPagination";
+const MyBlogs = () => {
   const [open, setOpen] = useState(false)
   const accessToken = useSelector(state => state.auth.accessToken)
 
-    
   return (
     <div className="bg-gradient-to-r from-amber-700 to-green-500 min-h-screen ">
       <div className=" max-w-[1200px] mx-auto  pt-28 pb-10 px-2 min-h-screen ">
         <div>
           <h2 className="text-white text-center font-bold text-3xl">
-            Welcome to Caps Blog
+            My blogs
           </h2>
-          {/* <p className="text-center text-white w-full md:w-3/5 mx-auto my-5">
-            Subscribe to Caps blog and never miss out on the latest updates
-            <br />
-            Stay in the loop with us!
-          </p> */}
+           
         </div>
-
-        {/* <EmailSubscruction /> */}
+ 
         <div className="flex items-center justify-center my-5 " >
-          <Categories />
+          <MyBlogCategories />
         </div>
-        <SearchBar />
+        <MyBlogSearchBar />
 
-        <Pagination />
+        <MyBlogPagination />
 
         {/*//? Blogs */}
         <div className="flex items-center justify-center my-5">
-          <Blogs />
+          <MyBlogs_Blogs />
         </div>
       </div>
       {
@@ -52,5 +50,7 @@ const Home = () => {
     </div>
   );
 };
+ 
 
-export default Home;
+
+export default MyBlogs

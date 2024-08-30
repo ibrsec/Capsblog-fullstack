@@ -3,13 +3,16 @@ import Blog from "../components/home/blogs/Blog";
 import { useParams } from "react-router-dom";
 import useBlogServices from "../services/useBlogServices";
 import { useSelector } from "react-redux";
+import useCommentServices from "../services/useCommentServices";
 
 const BlogDetailPage = () => {
     const {id} = useParams();
 
     const {getOneBlogApi} = useBlogServices();
+    const { getCommentsOfBlog} = useCommentServices();
     useEffect(()=> {
         getOneBlogApi(id);
+        getCommentsOfBlog(id); 
     },[])
     const blog =  useSelector(state=> state.blog.oneBlog);
   return (

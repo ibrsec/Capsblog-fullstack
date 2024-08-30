@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import useCategoryServices from "../../services/useCategoryServices";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryFilter, setPagination } from "../../app/features/blogSlice";
+import { setMyBlogCategoryFilter, setMyBlogPagination } from "../../app/features/blogSlice";
 import { useLocation } from "react-router-dom";
 
-const Categories = () => {
+const MyBlogCategories = () => {
   const { getCategoriesApi } = useCategoryServices();
   useEffect(() => {
     getCategoriesApi();
   }, []);
   const categories = useSelector((state) => state.category.categories);
   const activeCategoryGlobal = useSelector(
-    (state) => state.blog.blogQueries.filters.categoryId
+    (state) => state.blog.myBlogQueries.filters.categoryId
   );
   const pagination = useSelector(
-    (state) => state.blog.blogQueries.pagination
+    (state) => state.blog.myBlogQueries.pagination
   );
 
   const [activeCategoryId, setActiveCategoryId] = useState(
@@ -42,8 +42,8 @@ const Categories = () => {
             value={activeCategoryId}
             onChange={(e) => {
               setActiveCategoryId(e.target.value)
-              dispatch(setPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
-              dispatch(setCategoryFilter(e.target.value));
+              dispatch(setMyBlogPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
+              dispatch(setMyBlogCategoryFilter(e.target.value));
             }}
           >
             <option value="">All</option>
@@ -66,8 +66,8 @@ const Categories = () => {
               aria-current="page"
               onClick={() => {
                 setActiveCategoryId("");
-                dispatch(setPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
-                dispatch(setCategoryFilter(""));
+                dispatch(setMyBlogPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
+                dispatch(setMyBlogCategoryFilter(""));
               }}
             >
               All
@@ -93,8 +93,8 @@ const Categories = () => {
                   aria-current="page"
                   onClick={() => {
                     setActiveCategoryId(category?._id);
-                    dispatch(setPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
-                    dispatch(setCategoryFilter(category?._id));
+                    dispatch(setMyBlogPagination({...pagination,page:1,pages:{...pagination?.pages,current:1}}))
+                    dispatch(setMyBlogCategoryFilter(category?._id));
                   }}
                 >
                   {category.name}
@@ -142,4 +142,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default MyBlogCategories;

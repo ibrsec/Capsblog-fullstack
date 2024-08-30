@@ -8,7 +8,8 @@ import { refreshTokenSuccess, fetchAuthLogout } from '../app/features/authSlice'
 
 const useAxios = () => {
 
-    const baseURL = "http://localhost:10000/api";
+    // const baseURL = "http://localhost:10000/api";
+    const baseURL = "/api";
 const accessToken = useSelector(state=> state.auth.accessToken);
 const refreshToken = useSelector((state) => state.auth.refreshToken);
 const dispatch = useDispatch();

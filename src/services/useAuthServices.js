@@ -9,6 +9,9 @@ import {
   fetchAuthLogout,
 } from "../app/features/authSlice";
 import { toastError, toastSuccess } from "../helpers/toastify";
+import { fetchBlogLogout } from "../app/features/blogSlice";
+import { fetchCategoryLogout } from "../app/features/categorySlice";
+import { fetchCommentLogout } from "../app/features/commentSlice";
 
 const useAuthServices = () => {
   const { axiosPublic } = useAxios();
@@ -62,8 +65,6 @@ const useAuthServices = () => {
     }
   };
 
-
-  
   const logoutApi = async () => {
     const endPoint = "/auth/logout";
 
@@ -74,9 +75,11 @@ const useAuthServices = () => {
       const data = response?.data;
       dispatch(fetchAuthLogout());
 
-      // dispatch(deleteConvLogout());
-      // dispatch(deleteMessageLogout());
-      // // dispatch(deleteStockLogout());
+      dispatch(fetchBlogLogout());
+      dispatch(fetchCategoryLogout());
+      dispatch(fetchCommentLogout());
+
+      
       //!navigate
       navigate("/login");
 
@@ -88,10 +91,6 @@ const useAuthServices = () => {
       console.log("logout api error:", error);
     }
   };
-
-
-
-
 
   return { loginApi, registerApi, logoutApi };
 };

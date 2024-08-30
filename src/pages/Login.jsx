@@ -3,10 +3,11 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useAuthServices from "../services/useAuthServices";
 import { passwordValidation } from "../helpers/passwordValidation";
 import { toastDefault, toastWarn } from "../helpers/toastify";
+import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 
 const Login = () => {
@@ -56,8 +57,10 @@ const Login = () => {
     });
   };
 
+  const accessToken = useSelector(state=> state.auth.accessToken);
+  
 
-  return (
+  return  accessToken ? <Navigate to="/" /> : (
     <div className="pt-28 pb-10 px-1  bg-gradient-to-r from-blue-500 to-green-500 min-h-screen flex items-center justify-center">
       <div className=" p-3 rounded-lg min-w-96">
         <div className="flex items-center justify-center">

@@ -2,27 +2,39 @@ import React, { useEffect } from "react";
 import useBlogServices from "../../../services/useBlogServices";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toastWarn } from "../../../helpers/toastify";
+import EditDeleteBlog from "./EditDeleteBlog";
+import Comments from "./comments/Comments";
 
 const Blog = ({ blog }) => {
+  const accessToken = useSelector((state) => state.auth.accessToken);
+
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
   const likes = useSelector((state) => state.blog.likes[blog?._id]);
   const countOfLike = likes?.length || 0;
 
   const comments = useSelector((state) => state.comment.comments);
-  console.log("comments", comments);
+  // console.log("comments", comments);
   const blogsComments = comments?.filter(
     (comment) => comment?.blogId === blog?._id
   );
 
-  const { toggleLikeOfBlogApi } = useBlogServices();
+  const { toggleLikeOfBlogApi,publishBlogToggleApi } = useBlogServices();
   const user = useSelector((state) => state.auth.user);
   const isUserLiked = likes?.includes(user?._id);
-  console.log('blog?.image', blog?.image)
+  // console.log("blog?.image", blog?.image);
 
   return (
-    <article className={location.pathname.startsWith("/blogDetails") ? "" : "h-[590px]  min-w-[370px] sm:min-w-[315px] md:min-w-[378px] lg:min-w-[335px] xl:min-w-0" +"  mb-4 break-inside p-6 rounded-xl bg-[#324706] bg-gradient-to-r to-amber-700 from-[#324706]  flex flex-col bg-clip-border justify-between border border-black"}>
+    <article
+      className={
+        location.pathname.startsWith("/blogDetails")
+          ? ""
+          : "h-[590px]  w-[370px] sm:w-[315px] md:w-[378px] lg:w-[335px] xl:w-[270px] " +
+            "  relative mb-4 break-inside p-6 rounded-xl bg-[#324706] bg-gradient-to-r to-amber-700 from-[#324706]  flex flex-col bg-clip-border justify-between border border-black"
+      }
+    >
       <div className="flex pb-6 items-start justify-between">
         <div className="flex">
           <img
@@ -44,7 +56,9 @@ const Blog = ({ blog }) => {
             </div>
           </div>
         </div>
-        <div className="text-end text-lime-300 text-sm font-semibold ">{blog?.categoryId?.name}</div>
+        <div className="text-end text-lime-300 text-sm font-semibold ">
+          {blog?.categoryId?.name || "no category"}
+        </div>
       </div>
       <h2 className="text-xl font-bold text-white text-center line-clamp-2">
         {blog?.title}
@@ -54,9 +68,13 @@ const Blog = ({ blog }) => {
           <div className="flex   w-full h-full ">
             <img
               className=" rounded-tl-lg object-contain   h-full w-full"
-              src={blog?.image || "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png"}
+              src={
+                blog?.image ||
+                "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png"
+              }
               onError={(e) => {
-                e.target.src = "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png"; // Placeholder URL
+                e.target.src =
+                  "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png"; // Placeholder URL
               }}
               alt="blog image"
             />
@@ -70,7 +88,14 @@ const Blog = ({ blog }) => {
       <div className="flex items-center justify-center gap-3">
         <div className="py-4">
           <span
-            onClick={() => toggleLikeOfBlogApi(blog?._id)}
+            onClick={() => {
+              if (!accessToken) {
+                toastWarn("You must Login first!");
+                navigate("/login");
+                return;
+              }
+              toggleLikeOfBlogApi(blog?._id);
+            }}
             className="cursor-pointer inline-flex items-center"
             href="#"
           >
@@ -107,7 +132,7 @@ const Blog = ({ blog }) => {
 
         {/* visibility */}
         <div className="py-4">
-          <a className="inline-flex items-center" href="#">
+          <div className="inline-flex items-center" href="#">
             <span className="mr-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,25 +152,46 @@ const Blog = ({ blog }) => {
               </svg>
             </span>
             <span className="text-lg font-bold">{blog?.countOfVisitors}</span>
-          </a>
+          </div>
         </div>
       </div>
+
+      {/* publish */}
+      {(location.pathname === "/myblogs" || location.pathname.startsWith("/blogDetails")) && user?._id === blog?.userId?._id && (
+        <div className={"flex flex-col items-center justify-start gap-1 absolute right-1 "+ (location.pathname.startsWith("/blogDetails") ? " top-60 " : " top-24 ")}>
+        <div
+          className={
+            " text-center text-sm w-[110px] h-[110px] rounded-full text-white flex items-center justify-center   rotate-45 border-8 border-black    " +
+            (blog?.isPublish ? " bg-green-500 " : "bg-red-500 ") 
+          }
+        >
+          {blog?.isPublish ? "Published" : "Not-Published"}
+        </div>
+        <button onClick={() => publishBlogToggleApi(blog?._id, !blog?.isPublish)} className={"px-3 py-2 rounded-xl text-white " +( blog?.isPublish ? "bg-amber-700 hover:bg-amber-600 active:bg-amber-500 " : "bg-lime-700 hover:bg-lime-600 active:bg-lime-500 ")}>{blog?.isPublish ? "Un Publish" : "Publish"}</button>
+        </div>
+      )}
+
+      {/* comments */}
+      {location.pathname.startsWith("/blogDetails") &&
+      <Comments blogId={blog?._id}/>
+        }
+
+      {/* buttons */}
       <div className="mt-4 ">
         {location.pathname.startsWith("/blogDetails") ? (
           <div className="flex items-center justify-center gap-2">
-            
-          <button
-            onClick={() => navigate("/")}
-            className="text-nowrap bg-lime-700 text-white py-3 px-16 w-full text-sm font-semibold hover:bg-lime-600 active:bg-lime-500 transition-all rounded-lg"
-          >
-            Home
-          </button>
-          <button
-            onClick={() => navigate(-1)}
-            className="text-nowrap bg-lime-700 text-white py-3 px-16 w-full text-sm font-semibold hover:bg-lime-600 active:bg-lime-500 transition-all rounded-lg"
-          >
-            Go Back
-          </button>
+            <button
+              onClick={() => navigate("/")}
+              className="text-nowrap bg-lime-700 text-white py-3 px-16 w-full text-sm font-semibold hover:bg-lime-600 active:bg-lime-500 transition-all rounded-lg"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => navigate(-1)}
+              className="text-nowrap bg-lime-700 text-white py-3 px-16 w-full text-sm font-semibold hover:bg-lime-600 active:bg-lime-500 transition-all rounded-lg"
+            >
+              Go Back
+            </button>
           </div>
         ) : (
           <button
@@ -155,7 +201,16 @@ const Blog = ({ blog }) => {
             Read More...
           </button>
         )}
+
+
+        {/* edit delete buttons */}
       </div>
+      {location.pathname.startsWith("/blogDetails") &&  (user?._id === blog?.userId?._id || user?.isAdmin) &&(
+        <div className="fixed top-2/3 right-0 animate-fade-in  ">
+          {" "}
+          <EditDeleteBlog blogId={blog?._id} blog={blog} />
+        </div>
+      )}
     </article>
   );
 };

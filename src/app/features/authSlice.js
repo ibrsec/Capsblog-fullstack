@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     user: {},
+    users:[],
     accessToken: "",
     refreshToken: "",
     loading: false,
@@ -38,9 +39,19 @@ const authSlice = createSlice({
             state.refreshToken = payload?.bearer?.refreshToken;
 
         },
+        fetchUsersSuccess:(state,{payload})=>{
+            state.loading = false;
+            state.users = payload; 
+
+        },
+        fetchAuthSuccessWithoutPayload:(state)=>{
+            state.loading = false; 
+
+        },
         fetchAuthLogout:(state)=>{
             state.loading = false;
             state.user = {};
+            state.users = [];
             state.accessToken = "";
             state.refreshToken = "";
 
@@ -59,5 +70,5 @@ const authSlice = createSlice({
 })
 
 
-export const {fetchAuthStart, fetchAuthFail, fetchAuthLoginSuccess, fetchAuthLogout,fetchAuthRegisterSuccess, refreshTokenSuccess,} = authSlice.actions;
+export const {fetchAuthStart, fetchAuthFail, fetchAuthLoginSuccess, fetchAuthLogout,fetchAuthRegisterSuccess, refreshTokenSuccess, fetchAuthSuccessWithoutPayload, fetchUsersSuccess} = authSlice.actions;
 export default authSlice.reducer;

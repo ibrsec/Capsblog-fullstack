@@ -26,6 +26,9 @@ const categorySlice = createSlice({
             state.loading = false;
             state.categories = payload; 
         }, 
+        fetchCategorySuccessWithOutPayload:(state)=>{
+            state.loading = false;  
+        }, 
         fetchCategoryLogout:(state)=>{
             state.categories = []; 
 
@@ -34,5 +37,5 @@ const categorySlice = createSlice({
 })
 
 
-export const {fetchCategoryStart, fetchCategoryFail, fetchCategorySuccess, fetchCategoryLogout,} = categorySlice.actions;
+export const {fetchCategoryStart, fetchCategoryFail, fetchCategorySuccess, fetchCategorySuccessWithOutPayload, fetchCategoryLogout,} = categorySlice.actions;
 export default categorySlice.reducer;
