@@ -63,9 +63,7 @@ const Blog = ({ blog }) => {
       <h2 className="text-xl font-bold text-white text-center line-clamp-2">
         {blog?.title}
       </h2>
-      <div className="py-4   w-full h-1/2">
-        <div className="flex justify-between gap-1 mb-1   w-full h-full">
-          <div className="flex   w-full h-full ">
+      <div className={"py-4   w-full  flex justify-between mb-1 " + (location.pathname.startsWith("/blogDetails") ? "h-auto" : "h-[200px]")}>  
             <img
               className=" rounded-tl-lg object-contain   h-full w-full"
               src={
@@ -77,11 +75,9 @@ const Blog = ({ blog }) => {
                   "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png"; // Placeholder URL
               }}
               alt="blog image"
-            />
-          </div>
-        </div>
+            /> 
       </div>
-      <p className="text-slate-200 text-sm line-clamp-4 text-justify">
+      <p className="text-slate-200 text-sm line-clamp-3 h-[75px] text-justify">
         {blog?.content}
       </p>
       {/* fav */}

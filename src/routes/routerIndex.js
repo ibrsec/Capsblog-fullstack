@@ -22,6 +22,7 @@ router.use('/auth',require('./authRouter'));
 router.use('/categories',require('./categoryRouter'));
 router.use('/blogs',require('./blogRouter'));
 router.use('/comments',require('./commentRouter'));
+router.use('/emails',require('./emailRouter'));
 
  
 

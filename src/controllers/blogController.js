@@ -2,6 +2,7 @@
 
 const { mongoose } = require("../configs/dbConnection");
 const CustomError = require("../errors/customError");
+const sendMail = require("../helpers/sendMail");
 const {
   idTypeValidationOr400,
   mustRequirementOr400,
@@ -16,6 +17,7 @@ const {
 
 const { Blog } = require("../models/blogModel");
 const { Category } = require("../models/categoryModel");
+const { Email } = require("../models/emailModel");
 const { User } = require("../models/userModel");
 
 module.exports.blog = {
@@ -288,6 +290,42 @@ module.exports.blog = {
 
     const newBlog = await Blog.create(req.body); //create new blog
 
+
+    //subscribtion: send email settings!
+    if (newBlog.isPublish) {
+      //find the emails
+      const emailsData = await Email.find({ categoryId: newBlog?.categoryId });
+      console.log("emailsData", emailsData);
+      const emails = emailsData.reduce((acc, item) => [...acc, item.email], []);
+      console.log("emails", emails);
+
+        //send mail for subscribtion
+        sendMail(
+          emails.join(","),
+          `CapsBlog - New blog in ${category?.name} category!`,
+          `
+          <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); overflow: hidden;">
+          <div style="background-color: #80874C; color: #ffffff; padding: 20px; text-align: center;">
+              <h1 style="margin: 0; font-size: 24px;">A new Category is added at the Caps Blog!</h1>
+          </div>
+          <div style="padding: 30px; text-align: center;">
+              <p style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0;">Hi,</p>
+              <p style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0;">We are informing you about the new added  blog at the category${category?.name} you selected! 🎉</p> 
+              <img src=${newBlog?.image} alt="blog image" style="display: block; margin:auto; width: 350px; heigth: 300px; object-fit: cover; margin-top: 20px; margin-bottom: 20px;   border-radius: 5px; "/>
+              <a href="https://capsblog-fullstack.onrender.com/blogDetails/${newBlog?._id}" style="display: inline-block; margin-top: 20px;  color: blue; text-decoration: none; border-radius: 5px; font-weight: bold;">Blog title: ${newBlog?.title} (login is required!)</a>
+          </div>
+          <div style="background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; color: #777777;">
+              <p style="margin: 0;">If you have any questions or feedback, feel free to reach out.</p>
+              <p style="margin: 0;">If you want to delete your subscription: </p>
+              <a href="https://capsblog-fullstack.onrender.com/api/emails/subscription/${newBlog?._id}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #80874C;
+              color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;"> Remove subscription</a>
+              <p style="margin: 0;">Thank you, you have stayed in loop!</p>
+              <p style="margin: 0;">Best regards,<br>Caps Blog</p>
+          </div>
+      </div>
+          `
+        );
+    }
     res.status(201).json({
       error: false,
       message: "A new blog is created!",
@@ -395,7 +433,7 @@ module.exports.blog = {
 
     //Checks if the user making the request is authorized to update a specific blog.
     if (!req.user.isAdmin) {
-      if (userId != (blog?.userId)) {
+      if (userId != blog?.userId) {
         throw new CustomError(
           "You are not authorized to update this blog!",
           403
@@ -574,7 +612,7 @@ module.exports.blog = {
 
     //Checks if the user making the request is authorized to update a specific blog.
     if (!req.user.isAdmin) {
-      if (userId != (blog?.userId)) {
+      if (userId != blog?.userId) {
         throw new CustomError(
           "You are not authorized to update this blog!",
           403
@@ -719,7 +757,7 @@ module.exports.blog = {
 
     //Checks if the user making the request is authorized to delete a specific blog.
     if (!req.user.isAdmin) {
-      if (userId != (blog?.userId)) {
+      if (userId != blog?.userId) {
         throw new CustomError(
           "You are not authorized to delete this blog!",
           403

@@ -12,6 +12,8 @@ const queryHandler = require("./src/middlewares/queryHandler");
 const path = require("path");
 const userDataSync = require("./src/helpers/userDataSync");
 const adminUser = require("./src/helpers/adminUser");
+const nodemailer = require('nodemailer');
+const sendMail = require("./src/helpers/sendMail");
 
 /* ------------------------------- Express app ------------------------------ */
 const app = express();
@@ -42,6 +44,20 @@ app.use(queryHandler);
 /* --------------------------------- routes --------------------------------- */
 //welcome route
 app.all("/api", (req, res) => {
+
+
+sendMail(
+    "ibr.seckin@gmail.com",
+    'Welcome',
+    `
+        <h1>Welcome</h1>
+        <h2>My first mail</h2>
+        <p>Welcome to our system</p>
+    `
+)
+
+
+
   res.json({
     message: "Welcome to Stock api!",
     documents: [
