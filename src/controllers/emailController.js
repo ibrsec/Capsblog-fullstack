@@ -142,7 +142,7 @@ module.exports.email = {
 
             #swagger.responses[400] = {
             description:`Bad request - email field is required!</br> 
-            description:`Bad request - Invalid categoryId type(it should be a objectId)!</br> 
+                         - Invalid categoryId type(it should be a objectId)!</br> 
             
             `
             }
@@ -467,7 +467,7 @@ module.exports.email = {
 
     sendMail(
       newEmail?.email,
-      "Welcome to Our Newsletter!",
+      "CapsBlog - Welcome to Our Newsletter!",
       `
       <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); overflow: hidden;">
       <div style="background-color: #80874C; color: #ffffff; padding: 20px; text-align: center;">
