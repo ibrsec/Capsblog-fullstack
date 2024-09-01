@@ -317,8 +317,7 @@ module.exports.blog = {
           <div style="background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; color: #777777;">
               <p style="margin: 0;">If you have any questions or feedback, feel free to reach out.</p>
               <p style="margin: 0;">If you want to delete your subscription: </p>
-              <a href="${process.env.IMAGE_HOST}/api/emails/subscription/${newBlog?._id}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #80874C;
-              color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;"> Remove subscription</a>
+              
               <p style="margin: 0;">Thank you, you have stayed in loop!</p>
               <p style="margin: 0;">Best regards,<br>Caps Blog</p>
           </div>
