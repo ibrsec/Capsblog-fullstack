@@ -312,12 +312,12 @@ module.exports.blog = {
               <p style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0;">Hi,</p>
               <p style="font-size: 16px; color: #333333; line-height: 1.6; margin: 0;">We are informing you about the new added  blog at the category${category?.name} you selected! 🎉</p> 
               <img src=${newBlog?.image} alt="blog image" style="display: block; margin:auto; width: 350px; heigth: 300px; object-fit: cover; margin-top: 20px; margin-bottom: 20px;   border-radius: 5px; "/>
-              <a href="https://capsblog-fullstack.onrender.com/blogDetails/${newBlog?._id}" style="display: inline-block; margin-top: 20px;  color: blue; text-decoration: none; border-radius: 5px; font-weight: bold;">Blog title: ${newBlog?.title} (login is required!)</a>
+              <a href="${process.env.IMAGE_HOST}/blogDetails/${newBlog?._id}" style="display: inline-block; margin-top: 20px;  color: blue; text-decoration: none; border-radius: 5px; font-weight: bold;">Blog title: ${newBlog?.title} (login is required!)</a>
           </div>
           <div style="background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; color: #777777;">
               <p style="margin: 0;">If you have any questions or feedback, feel free to reach out.</p>
               <p style="margin: 0;">If you want to delete your subscription: </p>
-              <a href="https://capsblog-fullstack.onrender.com/api/emails/subscription/${newBlog?._id}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #80874C;
+              <a href="${process.env.IMAGE_HOST}/api/emails/subscription/${newBlog?._id}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #80874C;
               color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;"> Remove subscription</a>
               <p style="margin: 0;">Thank you, you have stayed in loop!</p>
               <p style="margin: 0;">Best regards,<br>Caps Blog</p>
