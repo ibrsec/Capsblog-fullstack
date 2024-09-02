@@ -41,7 +41,7 @@ useEffect(()=> {
           </li>
           <li className="w-full focus-within:z-10">
             <div 
-              className={"inline-block w-full p-4 text-white  border-r border-gray-700   hover:bg-amber-700  focus:bg-amber-900 cursor-pointer "+ (activeTab === 'emails' ? "bg-amber-500" : "bg-amber-800")}
+              className={"inline-block w-full p-4 text-white  border-r border-gray-700 rounded-e-lg   hover:bg-amber-700  focus:bg-amber-900 cursor-pointer "+ (activeTab === 'emails' ? "bg-amber-500" : "bg-amber-800")}
               aria-current="page"
               onClick={()=>setActiveTab('emails')}
             >
