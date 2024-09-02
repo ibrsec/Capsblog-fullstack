@@ -24,7 +24,7 @@ module.exports.email = {
             #swagger.summary = "List Emails"
             #swagger.description = `
                 List all Emails!</br></br>
-                <b>Permission= No Permission</b></br>   
+                <b>Permission= Admin users</b></br>   
                 You can send query with endpoint for filter[],search[], sort[], page and limit.
                 <ul> Examples:
                     <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>
@@ -59,7 +59,7 @@ module.exports.email = {
             #swagger.summary = "Get a Email"
             #swagger.description = `
                 Get a Email by email id(ObjectId)!</br></br>
-                <b>Permission= Loginned user</b></br>  
+                <b>Permission= Admin user</b></br>  
             `
             #swagger.responses[200] = {
             description: 'Successfully Found!',

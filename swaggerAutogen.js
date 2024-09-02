@@ -43,12 +43,7 @@ const document = {
     Category: require("./src/models/categoryModel").Category.schema.obj,
     Blog: require("./src/models/blogModel").Blog.schema.obj,
     Comment: require("./src/models/commentModel").Comment.schema.obj,
-    Error: {
-      error: "true",
-      message: "error message",
-      body: "error body",
-      stack: "errorstack info"
-    },
+    Email: require("./src/models/emailModel").Email.schema.obj,
   },
 };
 

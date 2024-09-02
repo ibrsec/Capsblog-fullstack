@@ -2007,7 +2007,7 @@
           "Emails"
         ],
         "summary": "List Emails",
-        "description": "  List all Emails!</br></br>  <b>Permission= No Permission</b></br>   You can send query with endpoint for filter[],search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "  List all Emails!</br></br>  <b>Permission= Admin users</b></br>   You can send query with endpoint for filter[],search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
             "description": "Successfully Listed!",
@@ -2104,7 +2104,7 @@
           "Emails"
         ],
         "summary": "Get a Email",
-        "description": "  Get a Email by email id(ObjectId)!</br></br>  <b>Permission= Loginned user</b></br>   ",
+        "description": "  Get a Email by email id(ObjectId)!</br></br>  <b>Permission= Admin user</b></br>   ",
         "parameters": [
           {
             "name": "id",
@@ -2625,24 +2625,54 @@
         }
       }
     },
-    "Error": {
+    "Email": {
       "type": "object",
       "properties": {
-        "error": {
-          "type": "string",
-          "example": "true"
+        "email": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "maxlength": {
+              "type": "number",
+              "example": 100
+            },
+            "validate": {
+              "type": "array",
+              "example": [
+                null,
+                "Invalid email type, type: __@__.__"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
-        "message": {
-          "type": "string",
-          "example": "error message"
-        },
-        "body": {
-          "type": "string",
-          "example": "error body"
-        },
-        "stack": {
-          "type": "string",
-          "example": "errorstack info"
+        "categoryId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Category"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     }
