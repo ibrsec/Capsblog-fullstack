@@ -15,12 +15,14 @@ import authSlice from "./features/authSlice";
 import categorySlice from "./features/categorySlice";
 import blogSlice from "./features/blogSlice";
 import commentSlice from "./features/commentSlice";
+import emailSlice from "./features/emailSlice";
 
 const rootReducer = combineReducers({
   auth: authSlice,
   category: categorySlice,
   blog: blogSlice,
   comment:commentSlice,
+  email:emailSlice,
 });
 
 const persistConfig = {

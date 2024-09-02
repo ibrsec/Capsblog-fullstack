@@ -12,6 +12,7 @@ import { toastError, toastSuccess } from "../helpers/toastify";
 import { fetchBlogLogout } from "../app/features/blogSlice";
 import { fetchCategoryLogout } from "../app/features/categorySlice";
 import { fetchCommentLogout } from "../app/features/commentSlice";
+import { fetchEmailLogout } from "../app/features/emailSlice";
 
 const useAuthServices = () => {
   const { axiosPublic } = useAxios();
@@ -78,6 +79,7 @@ const useAuthServices = () => {
       dispatch(fetchBlogLogout());
       dispatch(fetchCategoryLogout());
       dispatch(fetchCommentLogout());
+      dispatch(fetchEmailLogout());
 
       
       //!navigate
