@@ -58,7 +58,7 @@ const authSlice = createSlice({
         },
         refreshTokenSuccess : (state,{payload}) => {
             state.loading = false; 
-            state.token = payload; 
+            state.accessToken = payload; 
         },
         // logoutSuccess : (state) => {
         //     state.loading = false;
