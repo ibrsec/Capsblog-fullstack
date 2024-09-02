@@ -51,3 +51,10 @@ root.render(
 //? logutda global temizlenecek
 //! bloglarda yazi girince boyut bozuluyor her screene birde max-w koyulcak
 //! loading spinner eklenecek veri yoksa veri yok konacak
+
+
+
+
+
+// not publish ler baska userlara gozulmeyecek, admin goruru
+// admin panel routunu baska userlara sakla

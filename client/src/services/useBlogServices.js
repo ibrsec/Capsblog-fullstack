@@ -117,7 +117,12 @@ const useBlogServices = () => {
 
       //warnings
       toastSuccess(response?.data?.message);
-      getBlogsApi("filter[isPublish]=1");
+      if(location.pathname === '/'){
+        getBlogsApi("filter[isPublish]=1");
+      }else if(location.pathname.startsWith('/myblogs')){
+        getBlogsofUserApi("?sort[isPublish]=desc");
+      }
+
     } catch (error) {
       dispatch(fetchBlogFail());
       toastError(error?.response?.data?.message);

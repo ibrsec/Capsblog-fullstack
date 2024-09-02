@@ -25,8 +25,8 @@ const Blog = ({ blog }) => {
   const user = useSelector((state) => state.auth.user);
   const isUserLiked = likes?.includes(user?._id);
   // console.log("blog?.image", blog?.image);
-
-  return (
+// 
+  return user?._id != blog?.userId?._id && !blog?.isPublish ? <div><p>This blog is not published yet!</p></div> : (
     <article
       className={
         location.pathname.startsWith("/blogDetails")
