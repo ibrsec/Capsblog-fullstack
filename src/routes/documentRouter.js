@@ -21,7 +21,7 @@ router.use('/json',(req,res)=>{
 })
 
 router.use('/swagger',swaggerUI.serve, swaggerUI.setup(swaggerJson,{swaggerOptions:{persistAuthorization:true}}));
-router.use('/redoc', redoc({specUrl:'/api/documents/json', title:'Stock api Redoc Api doc'}))
+router.use('/redoc', redoc({specUrl:'/api/documents/json', title:'CapsBlog Redoc Api doc'}))
 
 
 
