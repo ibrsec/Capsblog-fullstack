@@ -71,7 +71,7 @@
 <!-- ABOUT THE PROJECT -->
 <a name="about-the-project"></a>
 ## ℹ️ About The Project
-
+ 
 [![stock-app](./client/public/project.gif)](https://capsblog-fs-express-react.onrender.com/)
 ---
 <b>ERD:</b>
